@@ -3,7 +3,7 @@ module.exports = {
     if (req.isAuthenticated()) {
       return next()
     } else {
-      res.redirect('https://myharada.netlify.app//')
+      res.redirect('https://myharada.netlify.app')
     }
   },
   ensureGuest: function (req, res, next) {
