@@ -20,7 +20,7 @@ const app = express()
 // Proxy requests to frontend (React development server)
 app.use(
   cors({
-    origin: 'http://localhost:5173', // Your React app's URL
+    origin: 'https://myharada.netlify.app/', // Your React app's URL
     methods: ['GET', 'POST', 'DELETE', 'PUT', 'OPTIONS'],
     credentials: true, // Allow cookies to be sent with requests (important for sessions)
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Custom-Header'],
