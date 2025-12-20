@@ -11,6 +11,7 @@ module.exports = {
 
   // Route for the callback after Google login attempt
   postLogin: (req, res, next) => {
+    console.log('PostLogin fired')
     passport.authenticate('google', {
       failureRedirect: 'https://myharada.netlify.app/', // Redirect if authentication fails
       successRedirect: 'https://myharada.netlify.app/dashboard', // Redirect to user page after successful login
@@ -19,6 +20,7 @@ module.exports = {
 
   // Google OAuth callback route after Google redirects back
   googleCallback: (req, res) => {
+    console.log('googleCallback fired')
     // After successful login, redirect to user page
     res.redirect('https://myharada.netlify.app/dashboard')
   },
