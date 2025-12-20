@@ -76,7 +76,7 @@ app.use(function (req, res, next) {
 // app.use(flash())
 
 app.use('/', mainRoutes)
-app.use('/auth', authRoutes)
+app.use('/api/auth', authRoutes)
 app.use('/api/grids', gridsRoutes)
 
 app.listen(process.env.PORT, () => {
