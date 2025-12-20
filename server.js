@@ -32,9 +32,6 @@ const corsOptions = {
 // Proxy requests to frontend (React development server)
 app.use(cors(corsOptions))
 
-// Handle preflight requests globally
-app.options('/(.*)', cors(corsOptions))
-
 // Logging
 if (process.env.NODE_ENV === 'development') {
   console.log('dev time baybee')
