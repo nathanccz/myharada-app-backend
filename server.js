@@ -17,15 +17,23 @@ require('dotenv').config({ path: './config/config.env' })
 
 const app = express()
 
+const corsOptions = {
+  origin: 'https://myharada.netlify.app', // Your React app's URL
+  methods: ['GET', 'POST', 'DELETE', 'PUT', 'OPTIONS'],
+  credentials: true, // Allow cookies to be sent with requests (important for sessions)
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'X-Requested-With',
+    'Accept',
+  ],
+}
+
 // Proxy requests to frontend (React development server)
-app.use(
-  cors({
-    origin: 'https://myharada.netlify.app', // Your React app's URL
-    methods: ['GET', 'POST', 'DELETE', 'PUT', 'OPTIONS'],
-    credentials: true, // Allow cookies to be sent with requests (important for sessions)
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Custom-Header'],
-  })
-)
+app.use(cors(corsOptions))
+
+// Handle preflight requests globally
+app.options('*', cors(corsOptions))
 
 // Logging
 if (process.env.NODE_ENV === 'development') {
