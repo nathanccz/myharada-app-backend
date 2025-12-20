@@ -11,20 +11,27 @@ router.get('/google', passport.authenticate('google', { scope: ['profile'] }))
 //@route    GET /auth/google/callback
 
 router.get(
-    '/google/callback', 
-    passport.authenticate('google', { failureRedirect: '/' }),
-    (req, res) => {
-        res.redirect('/profile')
-    }
+  '/google/callback',
+  passport.authenticate('google', { failureRedirect: '/' }),
+  (req, res) => {
+    res.json({
+      success: true,
+      user: req.user,
+      redirectTo: '/profile', // Tell frontend where to redirect
+    })
+  }
 )
 
 // @desc    Logout user
 // @route   /auth/logout
-router.get('/logout', (req, res, next) => { //Note: Check passports.js documentation for new callback requirement.
-    req.logout(function(err) {
-        if (err) { return next(err); }
-        res.redirect('/')
-      })
+router.get('/logout', (req, res, next) => {
+  //Note: Check passports.js documentation for new callback requirement.
+  req.logout(function (err) {
+    if (err) {
+      return next(err)
+    }
+    res.redirect('/')
+  })
 })
 
 module.exports = router
