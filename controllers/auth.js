@@ -13,7 +13,7 @@ module.exports = {
   postLogin: (req, res, next) => {
     passport.authenticate('google', {
       failureRedirect: 'https://myharada.netlify.app/', // Redirect if authentication fails
-      successRedirect: 'https://myharada.netlify.app/', // Redirect to user page after successful login
+      successRedirect: 'https://myharada.netlify.app/dashboard', // Redirect to user page after successful login
     })(req, res, next)
   },
 
