@@ -4,13 +4,13 @@ const authController = require('../controllers/auth')
 const homeController = require('../controllers/home')
 const { ensureAuth, ensureGuest } = require('../middleware/auth')
 
-router.get('/api/dashboard', homeController.getIndex)
-router.get('/api/google', authController.getLogin)
+router.get('/auth/dashboard', homeController.getIndex)
+router.get('/auth/google', authController.getLogin)
 router.get(
-  '/api/google/callback',
+  '/auth/google/callback',
   authController.postLogin,
   authController.googleCallback
 )
-router.get('/api/logout', authController.logout)
+router.get('/auth/logout', authController.logout)
 
 module.exports = router
