@@ -34,6 +34,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Passport config
+app.set('trust proxy', 1)
 require('./config/passport')(passport)
 
 connectDB()
