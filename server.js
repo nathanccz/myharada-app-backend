@@ -33,7 +33,7 @@ const corsOptions = {
 app.use(cors(corsOptions))
 
 // Handle preflight requests globally
-app.options('/*', cors(corsOptions))
+app.options('/(.*)', cors(corsOptions))
 
 // Logging
 if (process.env.NODE_ENV === 'development') {
