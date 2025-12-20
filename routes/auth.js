@@ -18,11 +18,7 @@ router.get(
     console.log('User:', req.user)
     console.log('Is authenticated:', req.isAuthenticated())
 
-    res.json({
-      success: true,
-      user: req.user,
-      redirectTo: '/profile',
-    })
+    res.redirect('/profile')
   }
 )
 

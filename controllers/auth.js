@@ -20,7 +20,7 @@ module.exports = {
   // Google OAuth callback route after Google redirects back
   googleCallback: (req, res) => {
     // After successful login, redirect to user page
-    res.redirect('https://myharada.netlify.app/')
+    res.redirect('https://myharada.netlify.app/dashboard')
   },
 
   // Route to log the user out
