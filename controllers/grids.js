@@ -39,14 +39,13 @@ module.exports = {
     console.log(req.user)
     try {
       const savedGrids = await Grid.find({ userId: req.user.id })
-      let templateGrids = await Grid.find({
+      const templateGrids = await Grid.find({
         userId: process.env.ADMIN_USER_ID,
+        templateCategory: { $exists: true, $ne: null },
       })
 
-      templateGrids = templateGrids.filter((grid) => grid.templateCategory)
-
       if (savedGrids.length === 0) {
-        return res.json({ grids: [] })
+        return res.json({ grids: [], templates: templateGrids })
       }
 
       return res.json({ grids: savedGrids, templates: templateGrids })
