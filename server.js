@@ -17,6 +17,8 @@ require('dotenv').config({ path: './config/config.env' })
 
 const app = express()
 
+app.set('trust proxy', 1)
+
 app.use((req, res, next) => {
   console.log(`Incoming Request: ${req.method} ${req.url}`)
   next()
@@ -44,7 +46,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Passport config
-app.set('trust proxy', 1)
+
 require('./config/passport')(passport)
 
 connectDB()
