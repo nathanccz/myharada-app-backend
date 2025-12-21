@@ -17,6 +17,11 @@ require('dotenv').config({ path: './config/config.env' })
 
 const app = express()
 
+app.use((req, res, next) => {
+  console.log(`Incoming Request: ${req.method} ${req.url}`)
+  next()
+})
+
 const corsOptions = {
   origin: 'https://myharada.netlify.app', // Your React app's URL
   methods: ['GET', 'POST', 'DELETE', 'PUT', 'OPTIONS'],
