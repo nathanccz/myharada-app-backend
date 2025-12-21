@@ -62,7 +62,8 @@ app.use(
     }),
     cookie: {
       secure: true,
-      sameSite: 'none',
+      sameSite: 'lax', // changed from 'none'
+      path: '/',
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
     },
