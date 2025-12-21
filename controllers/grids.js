@@ -39,12 +39,17 @@ module.exports = {
     console.log(req.user)
     try {
       const savedGrids = await Grid.find({ userId: req.user.id })
+      let templateGrids = await Grid.find({
+        userId: process.env.ADMIN_USER_ID,
+      })
+
+      templateGrids = templateGrids.filter((grid) => grid.templateCategory)
 
       if (savedGrids.length === 0) {
         return res.json({ grids: [] })
       }
 
-      return res.json({ grids: savedGrids })
+      return res.json({ grids: savedGrids, templates: templateGrids })
     } catch (error) {
       console.log(error)
       return res.status(500).json({ message: 'Server Error' })
