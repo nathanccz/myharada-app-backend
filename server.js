@@ -30,7 +30,7 @@ const corsOptions = {
 }
 
 // Proxy requests to frontend (React development server)
-app.use(cors(corsOptions))
+app.use('/api', cors(corsOptions))
 
 // Logging
 if (process.env.NODE_ENV === 'development') {
