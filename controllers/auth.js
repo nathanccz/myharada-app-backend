@@ -13,8 +13,8 @@ module.exports = {
   postLogin: (req, res, next) => {
     console.log('PostLogin fired')
     passport.authenticate('google', {
-      failureRedirect: 'https://myharada.netlify.app/', // Redirect if authentication fails
-      successRedirect: 'https://myharada.netlify.app/dashboard', // Redirect to user page after successful login
+      failureRedirect: `${process.env.REDIRECT_URL_BASE}/`, // Redirect if authentication fails
+      successRedirect: `${process.env.REDIRECT_URL_BASE}/dashboard`, // Redirect to user page after successful login
     })(req, res, next)
   },
 
@@ -22,7 +22,7 @@ module.exports = {
   googleCallback: (req, res) => {
     console.log('googleCallback fired')
     // After successful login, redirect to user page
-    res.redirect('https://myharada.netlify.app/dashboard')
+    res.redirect(`${process.env.REDIRECT_URL_BASE}/dashboard`)
   },
 
   // Route to log the user out
@@ -31,7 +31,7 @@ module.exports = {
       if (err) {
         return next(err)
       }
-      res.redirect('https://myharada.netlify.app/')
+      res.redirect(`${process.env.REDIRECT_URL_BASE}/`)
     })
   },
 }

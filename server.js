@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 })
 
 const corsOptions = {
-  origin: 'https://myharada.netlify.app', // Your React app's URL
+  origin: ['http://localhost:5173', 'https://myharada.netlify.app'], // Your React app's URL
   methods: ['GET', 'POST', 'DELETE', 'PUT', 'OPTIONS'],
   credentials: true, // Allow cookies to be sent with requests (important for sessions)
   allowedHeaders: [
@@ -58,19 +58,21 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 // Sessions
+const isProd = process.env.NODE_ENV === 'production'
+
 app.use(
   session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false,
-    proxy: true,
+    proxy: isProd,
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
       touchAfter: 24 * 3600, // lazy session update
     }),
     cookie: {
-      secure: true,
-      sameSite: 'lax', // changed from 'none'
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax', // changed from 'none'
       path: '/',
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
