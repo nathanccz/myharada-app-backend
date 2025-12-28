@@ -3,6 +3,7 @@ const Grid = require('../models/Grid')
 const gridTemplate = require('../data/grid-template.json')
 const fs = require('fs')
 const { mergeToNewGridTemplate } = require('../utils/helpers.js')
+const { sanitizeTemplateForUser } = require('../services/templateService.js')
 
 module.exports = {
   getGrid: async (req, res) => {
@@ -27,8 +28,10 @@ module.exports = {
     grid.userId = req.user.id
 
     try {
-      await Grid.create(grid)
-      return res.status(201).json({ message: 'Grid successfully added' })
+      const newGrid = await Grid.create(grid)
+      return res
+        .status(201)
+        .json({ message: 'Grid successfully added', gridId: newGrid._id })
     } catch (error) {
       console.log(error)
       return res.status(500).json({ message: 'Server Error' })
