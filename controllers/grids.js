@@ -3,6 +3,7 @@ const Grid = require('../models/Grid')
 const gridTemplate = require('../data/grid-template.json')
 const fs = require('fs')
 const { mergeToNewGridTemplate } = require('../utils/helpers.js')
+const { clearCheckMarks } = require('../services/gridService.js')
 
 module.exports = {
   getGrid: async (req, res) => {
@@ -143,22 +144,47 @@ module.exports = {
     }
   },
   clearGridCells: async (req, res) => {
-    const grid = { ...gridTemplate, userId: req.user.id }
-    const id = req.params.id
+    const { choice } = req.body
+    const gridId = req.params.id
 
-    if (!id) {
+    if (!gridId) {
       return res.status(400).json({ message: 'Missing grid ID' })
     }
 
     try {
-      const result = await Grid.findOneAndReplace({ _id: id }, grid)
+      const userGrid = await Grid.findOne({ _id: gridId })
 
-      if (!result) {
+      if (!userGrid) {
         return res.status(404).json({ message: 'Grid not found' })
       }
-      return res
-        .status(200)
-        .json({ message: 'Grid details updated successfully' })
+
+      if (choice === 'Clear check marks') {
+        const gridWithClearedCheckMarks = await Grid.findOneAndUpdate(
+          { _id: gridId },
+          { grids: clearCheckMarks(userGrid._doc) }
+        )
+
+        return res.status(200).json({
+          message: 'Check marks cleared successfully.',
+          grid: gridWithClearedCheckMarks,
+        })
+      } else if (choice === 'Clear all pillars & tasks') {
+        const newGrid = { ...gridTemplate }
+
+        newGrid.grids[4][4].text = userGrid._doc.title
+
+        const gridWithClearedTasks = await Grid.findOneAndUpdate(
+          { _id: gridId },
+          { grids: newGrid.grids }
+        )
+
+        return res.status(200).json({
+          message: 'Pillars and tasks cleared successfully.',
+          grid: gridWithClearedTasks,
+        })
+      } else {
+        return res.status(400).json({ message: 'Something went wrong.' })
+      }
     } catch (error) {
       console.log(error)
       return res.status(500).json({ message: 'Server Error' })
