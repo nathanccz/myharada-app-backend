@@ -3,7 +3,6 @@ const Grid = require('../models/Grid')
 const gridTemplate = require('../data/grid-template.json')
 const fs = require('fs')
 const { mergeToNewGridTemplate } = require('../utils/helpers.js')
-const { sanitizeTemplateForUser } = require('../services/templateService.js')
 
 module.exports = {
   getGrid: async (req, res) => {
