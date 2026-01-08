@@ -8,7 +8,10 @@ module.exports = {
     // Call passport.authenticate() to initiate Google OAuth
     passport.authenticate('google', { scope: ['profile'] })(req, res, next)
   },
-
+  handleLogin: async (req, res) => {
+    console.log('is this hitting')
+    return res.status(200).json({ message: req.user })
+  },
   // Route for the callback after Google login attempt
   postLogin: (req, res, next) => {
     console.log('PostLogin fired')
