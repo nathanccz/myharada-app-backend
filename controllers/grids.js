@@ -26,7 +26,7 @@ module.exports = {
   addGrid: async (req, res) => {
     const grid = req.body
     grid.userId = req.user.id
-
+    console.log(req.user)
     try {
       const newGrid = await Grid.create(grid)
       return res
@@ -39,7 +39,6 @@ module.exports = {
   },
 
   getGrids: async (req, res) => {
-    console.log(req.user)
     try {
       const savedGrids = await Grid.find({ userId: req.user.id })
       const templateGrids = await Grid.find({
@@ -75,7 +74,7 @@ module.exports = {
     try {
       const user = req.user.id
       const gridId = req.params.id
-
+      console.log('DELETE ROUTE:', user, gridId)
       const deletedGrid = await Grid.findOneAndDelete({
         userId: user,
         _id: gridId,
@@ -146,7 +145,7 @@ module.exports = {
   clearGridCells: async (req, res) => {
     const { choice } = req.body
     const gridId = req.params.id
-
+    console.log(choice, gridId, req.user)
     if (!gridId) {
       return res.status(400).json({ message: 'Missing grid ID' })
     }
