@@ -14,6 +14,6 @@ router.get(
   authController.postLogin,
   authController.googleCallback
 )
-router.get('/auth/logout', authController.logout)
+router.get('/api/auth/logout/', authController.logout)
 
 module.exports = router
