@@ -3,7 +3,7 @@ const User = require('../models/User')
 
 const authenticate = async (req, res, next) => {
   const token = req.headers.authorization?.split('Bearer ')[1]
-  console.log(req.user)
+
   if (req.isAuthenticated && req.isAuthenticated() && !token) {
     // User is authenticated via Passport
     return next()

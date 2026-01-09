@@ -145,7 +145,7 @@ module.exports = {
   clearGridCells: async (req, res) => {
     const { choice } = req.body
     const gridId = req.params.id
-    console.log(choice, gridId, req.user)
+
     if (!gridId) {
       return res.status(400).json({ message: 'Missing grid ID' })
     }
@@ -168,7 +168,7 @@ module.exports = {
           grid: gridWithClearedCheckMarks,
         })
       } else if (choice === 'Clear all pillars & tasks') {
-        const newGrid = { ...gridTemplate }
+        const newGrid = JSON.parse(JSON.stringify(gridTemplate))
 
         newGrid.grids[4][4].text = userGrid._doc.title
 
@@ -295,9 +295,10 @@ module.exports = {
       const mainResultFromGroq = mainData.choices[0].message.content
       const parsedMainResult = JSON.parse(mainResultFromGroq)
 
-      const mergedGrid = mergeToNewGridTemplate(parsedMainResult, {
-        ...gridTemplate,
-      })
+      const mergedGrid = mergeToNewGridTemplate(
+        parsedMainResult,
+        JSON.parse(JSON.stringify(gridTemplate))
+      )
 
       mergedGrid.userId = userId
       mergedGrid.gridType = 'project'
