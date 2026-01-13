@@ -1,4 +1,4 @@
-const admin = require('../config/firebaseAdmin')
+const { admin, waitForFirebase } = require('../config/firebaseAdmin')
 const User = require('../models/User')
 
 const authenticate = async (req, res, next) => {
@@ -14,6 +14,12 @@ const authenticate = async (req, res, next) => {
   }
 
   try {
+    const ready = await waitForFirebase()
+
+    if (!ready) {
+      return res.status(400).json({ message: 'Firebase not ready.' })
+    }
+
     const decodedToken = await admin.auth().verifyIdToken(token)
 
     // Find or create the MongoDB user
