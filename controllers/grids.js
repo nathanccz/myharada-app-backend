@@ -293,7 +293,12 @@ module.exports = {
 
       const mainData = await mainResponse.json()
       const mainResultFromGroq = mainData.choices[0].message.content
-      const parsedMainResult = JSON.parse(mainResultFromGroq)
+      const sanitized = mainResultFromGroq
+        .replace(/[“”]/g, '"')
+        .replace(/[‘’]/g, "'")
+        .replace(/\u00A0/g, ' ')
+
+      const parsedMainResult = JSON.parse(sanitized)
 
       const mergedGrid = mergeToNewGridTemplate(
         parsedMainResult,
