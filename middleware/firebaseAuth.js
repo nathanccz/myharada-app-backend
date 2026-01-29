@@ -10,6 +10,7 @@ const authenticate = async (req, res, next) => {
   }
 
   if (!token && !req.isAuthenticated && !req.isAuthenticated()) {
+    console.log('Failed to authenticate via passport')
     return res.status(401).json({ error: 'No token provided' })
   }
 
