@@ -157,7 +157,7 @@ module.exports = {
         return res.status(404).json({ message: 'Grid not found' })
       }
 
-      if (choice === 'Clear check marks') {
+      if (choice === 'clear_checks') {
         const gridWithClearedCheckMarks = await Grid.findOneAndUpdate(
           { _id: gridId },
           { grids: clearCheckMarks(userGrid._doc) }
@@ -167,18 +167,18 @@ module.exports = {
           message: 'Check marks cleared successfully.',
           grid: gridWithClearedCheckMarks,
         })
-      } else if (choice === 'Clear all pillars & tasks') {
-        const newGrid = JSON.parse(JSON.stringify(gridTemplate))
+      } else if (choice === 'clear_all') {
+        const newGrid = structuredClone(gridTemplate)
 
         newGrid.grids[4][4].text = userGrid._doc.title
-
+        console.log(newGrid)
         const gridWithClearedTasks = await Grid.findOneAndUpdate(
           { _id: gridId },
           { grids: newGrid.grids }
         )
 
         return res.status(200).json({
-          message: 'Pillars and tasks cleared successfully.',
+          message: 'Pillars and actions cleared successfully.',
           grid: gridWithClearedTasks,
         })
       } else {
