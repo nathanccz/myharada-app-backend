@@ -312,6 +312,7 @@ module.exports = {
 
       mergedGrid.userId = userId
       mergedGrid.gridType = 'project'
+      mergedGrid.pinned = false
 
       const newGrid = await Grid.create(mergedGrid)
 
