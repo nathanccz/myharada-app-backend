@@ -34,6 +34,9 @@ const GridSchema = new mongoose.Schema({
   completedAt: {
     type: Date,
   },
+  pinned: {
+    type: Boolean,
+  },
 })
 
 const Watchlist = mongoose.model('Grid', GridSchema)

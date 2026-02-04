@@ -59,11 +59,16 @@ module.exports = {
 
   pinGrid: async (req, res) => {
     const gridId = req.params.id
+    const isPinned = req.body.pinned
 
     try {
-      await Grid.findOneAndUpdate({ gridId: gridId }, { pinned: true })
+      await Grid.findOneAndUpdate({ _id: gridId }, { pinned: isPinned })
 
-      return res.status(204).json('pinned!')
+      if (isPinned) {
+        return res.status(201).json({ message: 'Grid pinned!' })
+      } else {
+        return res.status(201).json({ message: 'Grid unpinned!' })
+      }
     } catch (error) {
       console.log(error)
       return res.status(500).json({ message: 'Server Error' })
