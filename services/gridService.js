@@ -4,7 +4,11 @@ module.exports = {
 
     clearedGrid.grids.forEach((pillar, outerInd) => {
       pillar.forEach((task, innerInd) => {
-        clearedGrid.grids[outerInd][innerInd].completedAt = ''
+        const currentCell = clearedGrid.grids[outerInd][innerInd]
+        if (currentCell.status === 'complete' || currentCell.completedAt) {
+          clearedGrid.grids[outerInd][innerInd].completedAt = ''
+          clearedGrid.grids[outerInd][innerInd].status = ''
+        }
       })
     })
 

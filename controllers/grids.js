@@ -176,7 +176,7 @@ module.exports = {
         const newGrid = structuredClone(gridTemplate)
 
         newGrid.grids[4][4].text = userGrid._doc.title
-        console.log(newGrid)
+
         const gridWithClearedTasks = await Grid.findOneAndUpdate(
           { _id: gridId },
           { grids: newGrid.grids }
@@ -307,7 +307,7 @@ module.exports = {
 
       const mergedGrid = mergeToNewGridTemplate(
         parsedMainResult,
-        JSON.parse(JSON.stringify(gridTemplate))
+        structuredClone(gridTemplate)
       )
 
       mergedGrid.userId = userId
